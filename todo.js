@@ -4,7 +4,7 @@ const list = document.getElementById("list")
 
 let items=[];
 let editItem=null;
-
+let currentFilter="all"
 
 function addtoLocalStorage(){
     localStorage.setItem("todos",JSON.stringify(items))
@@ -19,10 +19,25 @@ function loadLocalStorage(){
 function render(){
     list.innerHTML =""
 
-    items.forEach(item =>{
+     let filterdTodos= items.filter(item =>{
+        if(currentFilter ==="all") return true;
+        if(currentFilter ==="active") return !item.completed;
+        if(currentFilter ==="completed") return item.completed;
+     })
+   
+    filterdTodos.forEach(item =>{
         const li =document.createElement("li");
         const span =document.createElement("span")
         span.textContent=item.text;
+
+        if(item.completed){
+            span.classList.add("completed")
+        }
+
+        const toggele=document.createElement("button")
+        toggele.textContent=item.completed ? "not completed" : "completed"
+        toggele.dataset.action="toggele"
+        toggele.dataset.id=item.id;
 
         const delBtn = document.createElement("button");
         delBtn.textContent="Delete";
@@ -35,6 +50,7 @@ function render(){
         editBtn.dataset.id=item.id;
 
         li.appendChild(span)
+        li.appendChild(toggele)
         li.appendChild(delBtn)
         li.appendChild(editBtn)
         list.appendChild(li)
@@ -69,8 +85,24 @@ list.addEventListener("click",(e)=>{
         add.textContent="Update";
         input.focus()
     }
+
+    if(action === "toggele"){
+        const item =items.find(item=>item.id === id);
+        if(!item) return ;
+        item.completed = !item.completed;
+        addtoLocalStorage();
+        render()
+    }
 })
 
+  const filterButtons = document.querySelectorAll(".filter");
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                currentFilter = btn.dataset.filter;
+                render()
+            })
+        })
 
 function addItem(){
       const val = input.value.trim();
@@ -81,7 +113,7 @@ function addItem(){
         items.push({
             id:Date.now(),
             text:val,
-           // completed:false
+            completed:false
         })
     }else{
         const item =items.find(item=>item.id === editItem)
@@ -101,6 +133,13 @@ function addItem(){
   input.addEventListener("keydown",(e)=>{
         if(e.key === "Enter"){
             addItem()
+        }
+
+        if(e.key ==="Escape" && editItem !== null){
+            editItem=null;
+            input.value=""
+            input.focus();
+            add.textContent="Add"
         }
     })
 add.addEventListener("click",()=>{

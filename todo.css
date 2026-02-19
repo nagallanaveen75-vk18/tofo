@@ -52,6 +52,10 @@ ul,li{
 #add:hover{
     background-color: darkviolet;
 }
+.completed{
+    text-decoration: line-through;
+    color: red;
+}
 #list{
     margin-top: 18px;
 }

@@ -1,0 +1,91 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: black;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ul,li{
+    list-style: none;
+}
+#input,#button,#list{
+    font-size: 16px;
+    font-weight: 700;
+}
+.container{
+    background-color: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 20px 40px yellow;
+}
+#input{
+    width: 250px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    outline: none;
+}
+#input:focus{
+    border-color: violet;
+
+}
+#add{
+    background-color: violet;
+    color: darkblue;
+    width: 30%;
+    margin-left: 2%;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+#add:hover{
+    background-color: darkviolet;
+}
+#list{
+    margin-top: 18px;
+}
+#list li{
+     display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f7f7f7;
+            color: #000;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            gap: 6px;
+}
+#list span{
+    flex: 1;
+    word-break: break-word;
+}
+#list button{
+     padding: 5px 8px;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+}
+button[data-action="edit"]{
+     background: #f005f0;
+            color: #000000;
+}
+button [data-action="delete"]{
+     background: red;
+            color: #000000;
+}
+#list button:hover{
+    opacity: 0.5;
+
+}
